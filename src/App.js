@@ -16,7 +16,6 @@ function App() {
 
   const getTasks = async () => {
     const response = await api.get('/tasks');
-    console.log("rrr", response);
     setTodoList(response.data.data);
   };
 
@@ -39,6 +38,21 @@ function App() {
       console.log("error", err);
     }
   }
+
+  const updateTask = async (id) => {
+    try {
+      const response = await api.put(`/tasks/${id}`);
+      
+      if(response.status === 200) {
+        console.log('success!');
+        getTasks();
+      } else {
+        throw new Error('task can not be updated');
+      }
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
 
   const deleteTask = async (id) => {
     try {
@@ -77,7 +91,7 @@ function App() {
         </Col>
       </Row>
 
-      <TodoBoard todoList={todoList} deleteTask={deleteTask}/>
+      <TodoBoard todoList={todoList} deleteTask={deleteTask} updateTask={updateTask}/>
     </Container>
   );
 }

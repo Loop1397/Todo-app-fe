@@ -13,6 +13,7 @@ const TodoPage = ({logout}) => {
   // useState안에 들어가 있는 값은 todoList의 초기값으로 사용됨
   const [todoList, setTodoList] = useState([]);
   const [todoValue, setTodoValue] = useState('');
+  const [error, setError] = useState('');
 
   const getTasks = async () => {
     const response = await api.get('/tasks');
@@ -20,6 +21,13 @@ const TodoPage = ({logout}) => {
   };
 
   const addTask = async () => {
+    if(todoValue === '') {
+      setError('할 일을 입력해주세요!!');
+      return 0;
+    }
+
+    setError('');
+
     try {
       // api 요청. 뒤의 {}는 body로 전달됨
       const response = await api.post('/tasks', {
@@ -89,6 +97,7 @@ const TodoPage = ({logout}) => {
         <Col xs={12} sm={2}>
           <button className="button-add" onClick={addTask}>추가</button>
         </Col>
+        {error && <div className="red-error">{error}</div>}
       </Row>
 
       <TodoBoard todoList={todoList} deleteTask={deleteTask} updateTask={updateTask}/>

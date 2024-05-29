@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import { useEffect, useState } from "react";
 import api from "../utils/api";
 
-const TodoPage = () => {
+const TodoPage = ({logout}) => {
   // useState안에 들어가 있는 값은 todoList의 초기값으로 사용됨
   const [todoList, setTodoList] = useState([]);
   const [todoValue, setTodoValue] = useState('');
@@ -92,6 +92,9 @@ const TodoPage = () => {
       </Row>
 
       <TodoBoard todoList={todoList} deleteTask={deleteTask} updateTask={updateTask}/>
+      <Col>
+        <button className="button-add" onClick={logout}>로그아웃</button>
+      </Col>
     </Container>
   );
 }

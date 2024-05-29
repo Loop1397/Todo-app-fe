@@ -27,6 +27,15 @@ function App() {
     }
   }
 
+  const logout = () => {
+    try {
+      sessionStorage.removeItem("token");
+      setUser(null);
+    } catch(error) {
+      console.log("ERROR!!", error.message);
+    }
+  }
+
   useEffect(() => {
     getUser();
   }, []);
@@ -36,7 +45,7 @@ function App() {
     <Routes>
       <Route path="/" element={
         <PrivateRoute user = {user}>
-          <TodoPage />
+          <TodoPage logout={logout}/>
         </PrivateRoute>
       } />
       <Route path="/register" element={<RegisterPage />} />
